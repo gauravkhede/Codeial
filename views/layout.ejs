@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/layout.css">
+        <title>
+            <%= title %>
+        </title>
+        <%- style %>
+    </head>
+    <body>
+        <%- include('_header') -%>
+
+        <!-- including variable part SO, body is predefined variable. -->
+        <%- body -%>
+
+        <%- include('_footer') -%>
+        <%- script %>
+    </body>
+</html>
