@@ -1,6 +1,9 @@
 <html>
     <head>
         <link rel="stylesheet" href="/css/layout.css">
+        <link rel="stylesheet" href="/css/users .css">
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/footer.css">
         <title>
             <%= title %>
         </title>
@@ -8,9 +11,12 @@
     </head>
     <body>
         <%- include('_header') -%>
-
+       
         <!-- including variable part SO, body is predefined variable. -->
-        <%- body -%>
+        <main id="layout-main">
+            <%- body -%>
+        </main>
+        
 
         <%- include('_footer') -%>
         <%- script %>

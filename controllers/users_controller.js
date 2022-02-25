@@ -8,12 +8,18 @@ module.exports.profile=function(req,res){
 //module.exports.profile=function(); to export this controller outside this file
 //for signUp
 module.exports.signUp=function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
     res.render('users_sign_up',{
         title:'users | sign Up',
     });
 }
 //for signIn
 module.exports.signIn=function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
     res.render('users_sign_in',{
         title:'users | sign in',
     });
@@ -40,4 +46,11 @@ module.exports.create=function(req,res){
 //sign in and create session for user
 module.exports.createSession=function(req,res){
     //TODO later
+    console.log('create session called');
+    return res.redirect('/');
+}
+//for signout
+module.exports.destroySession= function(req,res){
+    req.logout();
+    return res.redirect('/');
 }

@@ -1,0 +1,44 @@
+header{
+    display:flex;
+    width:100%;
+    // border:2px solid black;
+    color:white;
+    font-weight: 700;
+    background-color: darkblue;
+    #codeial-logo{
+    display:inline-block;
+    height:inherit;
+    // border:2px solid blue;
+    }
+    .navigation-icon{
+        min-width:92%;
+        display:flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        height:inherit;
+        // border:2px solid pink;
+        
+        // overflow: hidden;
+        .icon-container{
+            margin-top:8px;
+            height:100%;
+            display:inline-block;
+            margin-right: 14px;
+            a:link{
+                color: white;
+                text-decoration: none;
+            }
+            a:visited{
+                color: white;
+                text-decoration: none;
+            }
+            a:active{
+                color:blue;
+                text-decoration: none;
+            }
+        }
+
+    }
+
+
+}
