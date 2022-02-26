@@ -8,7 +8,7 @@ const postSchema = new mongoose.Schema({
     },
     user: {
         type:mongoose.Schema.Types.ObjectId,
-        refer: 'User',
+        ref: 'User',
     }
 },{
         timestamps:true,
