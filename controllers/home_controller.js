@@ -1,4 +1,5 @@
 const Post=require('../models/post');
+const User=require('../models/users');
 module.exports.home=function(req,res){
 
     // res.end('<h1> Express is up for codeial </h1>');
@@ -12,13 +13,25 @@ module.exports.home=function(req,res){
 
 //     });
 //populate the user for each post.
-Post.find({}).populate('user').exec(function(err,posts){
-    console.log('inside populate');
-    return res.render('home',{
-        title:'codeial | Home',
-        posts: posts,
-
+Post.find({})
+.populate('user')
+.populate({
+    path:'comments',
+    populate:{
+        path:'user',
+    }
+})
+.exec(function(err,posts){
+    User.find({},function(err,users){
+        return res.render('home',{
+            title:'codeial | Home',
+            posts: posts,
+            all_users:users,
+    
+        });
     });
+    // console.log('inside populate');
+    
 })
 
 

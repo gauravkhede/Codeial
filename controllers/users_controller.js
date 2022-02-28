@@ -1,9 +1,13 @@
 const User=require('../models/users');
 module.exports.profile=function(req,res){
     // res.end('<h1>USER PROFILE </h1>');
-    res.render('users',{
-        title:'users view'
+    User.findById(req.params.id,function(err,user){
+        res.render('users',{
+            title:'users view',
+            profile_user:user,
+        });
     });
+    
 }
 //module.exports.profile=function(); to export this controller outside this file
 //for signUp

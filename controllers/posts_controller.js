@@ -1,4 +1,5 @@
 const Post=require('../models/post');
+const Comment=require('../models/comment');
 module.exports.create=function(req,res){
     Post.create({
         content: req.body.content,
@@ -10,3 +11,17 @@ module.exports.create=function(req,res){
     
 }
 //module.exports.posts=function(); to export this controller outside this file
+
+module.exports.destroy= function(req,res){
+    Post.findById(req.params.id,function(err,post){
+        //.id means converting the object id into String and it is good for comparison
+        if(post.user == req.user.id){
+            post.remove();
+            Comment.deleteMany({post:req.params.id},function(err){
+                return res.redirect('back');
+            });
+        }else{
+            return res.redirect('back');
+        }
+    });
+}
