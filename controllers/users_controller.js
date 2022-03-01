@@ -1,4 +1,5 @@
 const User=require('../models/users');
+//isko async await krne ki jarurat nahi hai 1 hi callback function hai.
 module.exports.profile=function(req,res){
     // res.end('<h1>USER PROFILE </h1>');
     User.findById(req.params.id,function(err,user){
@@ -59,12 +60,15 @@ module.exports.create=function(req,res){
 }
 //sign in and create session for user
 module.exports.createSession=function(req,res){
+    req.flash('success','LoggedIn successfully');
     //TODO later
-    console.log('create session called');
+    // console.log('create session called');
     return res.redirect('/');
 }
 //for signout
 module.exports.destroySession= function(req,res){
+    
     req.logout();
+    req.flash('success','You have logged Out Successfully');
     return res.redirect('/');
 }
