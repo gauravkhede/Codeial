@@ -1,4 +1,7 @@
 const User=require('../models/users');
+
+const fs=require('fs');
+const path=require('path');
 //isko async await krne ki jarurat nahi hai 1 hi callback function hai.
 module.exports.profile=function(req,res){
     // res.end('<h1>USER PROFILE </h1>');
@@ -11,11 +14,40 @@ module.exports.profile=function(req,res){
     
 }
 //to update user profile
-module.exports.update=function(req,res){
+module.exports.update=async function(req,res){
+    // if(req.user.id== req.params.id){
+    //     User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
+    //         return res.redirect('back');
+    //     });
+    // }else{
+    //     return res.status(401).send('UnAuthorized');
+    // }
     if(req.user.id== req.params.id){
-        User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
-            return res.redirect('back');
-        });
+        try {
+            let user=await User.findById(req.params.id);    
+            User.uploadedAvatar(req,res,function(err){
+                if(err){ console.log('*****Multer Error ',err); return;}
+                // console.log(req.file);
+                user.name=req.body.name;
+                user.email=req.body.email;
+                if(req.file){
+                    //to remove previously Avatar from storage
+                    if(user.avatar){
+                        fs.unlinkSync(path.join(__dirname,'..',user.avatar));
+                    }
+                    user.avatar=User.avatarPath+'/'+req.file.filename;
+                }
+                user.save();
+                return res.redirect('back');
+            });
+            
+        } catch (err) {
+            //for flash messages
+        req.flash('error',err);
+        console.log('Error',err);
+        return res.redirect('back');
+        }
+
     }else{
         return res.status(401).send('UnAuthorized');
     }

@@ -10,6 +10,9 @@ const db=require('./config/mongoose');
 const session = require('express-session');
 const passport= require('passport');
 const passportLocal= require('./config/passport-local-strategy');
+const passportJWT=require('./config/passport-jwt-strategy');
+const passportGoogle= require('./config/passport-google-oauth-strategy');
+
 const MongoStore= require('connect-mongo');
 
 const sassMiddleware=require('node-sass-middleware');
@@ -27,7 +30,9 @@ app.use(express.urlencoded());
 
 app.use(cookieParser());
 //to set up static files
-app.use(express.static('./assets'));       
+app.use(express.static('./assets'));  
+//make the profile uploads path available to browser
+app.use('/uploads',express.static(__dirname+'/uploads'));
 
 //use expressLayout before routes
 app.use(expressLayout);
