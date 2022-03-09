@@ -1,6 +1,7 @@
 const Comment= require('../models/comment');
 const Post= require('../models/post');
 const { post } = require('../routes/comments');
+const commentsMailer= require('../mailers/comments_mailer');
 // module.exports.create= function(req,res){
 //     Post.findById(req.body.post,function(err,post){
 //         if(post){
@@ -27,6 +28,11 @@ module.exports.create=async function(req,res){
             post:req.body.post,
             user:req.user._id,
         });
+        post.comments.push(comment);
+        post.save();
+        comment= await comment.populate([{path: 'user', select: 'name'}, {path: 'user', select: 'email'}]);
+        commentsMailer.newComment(comment);
+        
         if(req.xhr){
             return res.status(200).json({
                 data:{
@@ -35,8 +41,7 @@ module.exports.create=async function(req,res){
                 message:'comment created',
             });
         }
-        post.comments.push(comment);
-        post.save();
+        
         return res.redirect('/');
     }   
     }catch(err){
