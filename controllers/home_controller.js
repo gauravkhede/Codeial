@@ -62,8 +62,12 @@ let posts=await Post.find({})
     path:'comments',
     populate:{
         path:'user',
+    },
+    //changes done for code Activity Solution
+    populate:{
+        path:'likes'
     }
-});
+}).populate('likes');
 let users=await User.find({});
 return res.render('home',{
     title:'codeial | Home',

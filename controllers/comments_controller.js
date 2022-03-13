@@ -2,6 +2,10 @@ const Comment= require('../models/comment');
 const Post= require('../models/post');
 const { post } = require('../routes/comments');
 const commentsMailer= require('../mailers/comments_mailer');
+//changes done for code Activity Solution
+const Like= require('../models/like');
+// const queue=require('../config/kue');
+// const commentEmailWorker= require('../workers/comment_email_worker');
 // module.exports.create= function(req,res){
 //     Post.findById(req.body.post,function(err,post){
 //         if(post){
@@ -32,6 +36,11 @@ module.exports.create=async function(req,res){
         post.save();
         comment= await comment.populate([{path: 'user', select: 'name'}, {path: 'user', select: 'email'}]);
         commentsMailer.newComment(comment);
+        // let job=queue.create('emails',comment).save(function(err){
+        //     if(err){console.log('Error in creating a queue',job.id);
+        //     return;}
+        //     console.log('Job enqueued',job.id);
+        // });
         
         if(req.xhr){
             return res.status(200).json({
@@ -71,6 +80,9 @@ module.exports.destroy=async function(req,res){
             let postId= comment.post;
             comment.remove();
             await Post.findByIdAndUpdate(postId, { $pull: { comments: req.params.id}});
+            //changes done for code Activity Solution
+            await Like.deleteMany({likeable: comment._id, onModel:'Comment'});
+            
             return res.redirect('back');
         }else{
             return res.redirect('back');

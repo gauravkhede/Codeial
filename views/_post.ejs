@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/css/posts.css">
 <li id="post-<%= post._id %>">
     <p>
             <small><%= post.user.name %> : <br></small>
@@ -5,7 +6,7 @@
     </p>
     <div class="post-comments">
             <% if(locals.user){ %>
-                    <form action="/comments/create" method="POST">
+                    <form id="post-<%= post._id %>-comments-form" action="/comments/create" method="POST">
                             <input type="text" name="content" placeholder="type here to add comment">
                             <input type="hidden" name="post" value="<%= post._id %>">
                             <input type="submit" value="Add Comment">
@@ -14,9 +15,22 @@
                     <% } %>
                     <% if(locals.user && locals.user.id== post.user.id){ %> 
                     <small>
-                            <a class="delete-post-button" href="/posts/destroy/<%= post.id %>">Delete</a>
+                        <!-- <a class="like-button" href="">Like</a>     -->
+                        <a class="delete-post-button" href="/posts/destroy/<%= post.id %>">Delete</a>
                     </small>
                     <% } %>
+
+                    <!-- changes done for code Activity Solution -->
+                    <small>
+                        <% if(locals.user){ %>
+                            <a class="toggle-like-button" data-likes="<%= post.likes.length%> " href="/likes/toggle/?id=<%= post._id%>&type=Post">
+                                <p class="like-button"><%= post.likes.length %> Likes </a></p>
+                            <% }else{ %>
+                                <p class="like-button"><%= post.likes.length %> Likes </p>
+                                <% } %>
+                        </small>
+
+
 <div class="post-comments-list">
 <ul id="post-comments-<%= post._id %>">
 <% for(comment of post.comments){ %>

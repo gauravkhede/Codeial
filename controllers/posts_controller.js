@@ -1,5 +1,7 @@
 const Post=require('../models/post');
 const Comment=require('../models/comment');
+//changes done for code Activity Solution
+const Like=require('../models/like');
 // module.exports.create=function(req,res){
 //     Post.create({
 //         content: req.body.content,
@@ -60,6 +62,11 @@ module.exports.destroy= async function(req,res){
         let post= await Post.findById(req.params.id);
      //.id means converting the object id into String and it is good for comparison
      if(post.user == req.user.id){
+         //changes done for code Activity Solution
+         await Like.deleteMany({likeable: post,onModel:'Post'});
+         await Like.deleteMany({_id: {$in:post.comments}});
+
+
         post.remove();
         await Comment.deleteMany({post:req.params.id});
         if(req.xhr){
