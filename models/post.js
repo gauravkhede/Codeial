@@ -25,4 +25,17 @@ const postSchema = new mongoose.Schema({
 );
 
 const Post =mongoose.model('Post',postSchema);
+postSchema.pre(Post.find({}),function(next){
+    this.populate({
+        path:'comments',
+        populate:[{
+            path:'user',
+            select:'name',
+        },]
+    })
+    next();
+
+}
+)
+
 module.exports = Post;

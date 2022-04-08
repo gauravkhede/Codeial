@@ -15,10 +15,12 @@ const Like=require('../models/like');
 //Using Async await
 module.exports.create= async function(req,res){
     try{
+       
         let post=await Post.create({
             content: req.body.content,
             user:req.user._id   
         });
+        // post=await post.populate([{path:'comments'},{path:'user'}]);
         if(req.xhr){
             return res.status(200).json({
                 data:{

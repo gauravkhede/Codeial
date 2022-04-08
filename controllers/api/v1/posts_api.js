@@ -25,7 +25,10 @@ module.exports.index=async function(req,res){
 module.exports.destroy= async function(req,res){
     try{
         let post= await Post.findById(req.params.id);
+        console.log(post,' this is post **********');
      //.id means converting the object id into String and it is good for comparison
+     console.log(post.user,'********** this is post.user');
+     console.log('This is req.user.id',req.user.id);
      if(post.user == req.user.id){
         post.remove();
         await Comment.deleteMany({post:req.params.id});
@@ -53,6 +56,7 @@ module.exports.destroy= async function(req,res){
     }catch(err){
         //for flash messages
         // req.flash('error',err);
+        console.log('*****',err);
         return res.status(500).json({
             message:'Internal Server Error',
         });

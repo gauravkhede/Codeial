@@ -1,5 +1,6 @@
 const Post=require('../models/post');
 const User=require('../models/users');
+const { post } = require('../routes/comments');
 // module.exports.home=function(req,res){
 
 //     // res.end('<h1> Express is up for codeial </h1>');
@@ -55,6 +56,7 @@ module.exports.home= async function(req,res){
 //     });
 try{
 //populate the user for each post.
+
 let posts=await Post.find({})
 .sort('-createdAt')
 .populate('user')
@@ -62,12 +64,20 @@ let posts=await Post.find({})
     path:'comments',
     populate:{
         path:'user',
-    },
-    //changes done for code Activity Solution
-    populate:{
-        path:'likes'
+        
     }
-}).populate('likes');
+    // changes done for code Activity Solution
+    // populate:{
+    //     path:'likes'
+    // }
+})
+.populate('likes');
+
+
+
+
+
+
 let users=await User.find({});
 return res.render('home',{
     title:'codeial | Home',

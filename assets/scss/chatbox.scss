@@ -1,0 +1,27 @@
+.chatbox-container{
+    min-height:30%;
+    min-width:100%;
+    margin-top:8%;
+    margin-left:85%;
+    border:1px dashed black;
+    #chat_messages_list{
+        
+        .other-message{
+            text-align: left;
+            list-style-type: none;
+            margin-bottom: 0.5rem;
+            background-color: lightblue;
+        }
+        .self-message{
+            text-align: right;
+            list-style-type: none;
+            margin-bottom: 0.5rem;
+            background-color: lightgreen;
+        }
+    }
+    #chatbox-input{
+        margin-top:100%;
+    }
+    
+
+}

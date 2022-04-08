@@ -4,8 +4,10 @@ const fs=require('fs');
 const path=require('path');
 //isko async await krne ki jarurat nahi hai 1 hi callback function hai.
 module.exports.profile=function(req,res){
+    
     // res.end('<h1>USER PROFILE </h1>');
     User.findById(req.params.id,function(err,user){
+        
         res.render('users',{
             title:'users view',
             profile_user:user,
@@ -24,7 +26,9 @@ module.exports.update=async function(req,res){
     // }
     if(req.user.id== req.params.id){
         try {
-            let user=await User.findById(req.params.id);    
+            let user=await User.findById(req.params.id);
+            //for flash messages
+            req.flash('success','Profile Updated');    
             User.uploadedAvatar(req,res,function(err){
                 if(err){ console.log('*****Multer Error ',err); return;}
                 // console.log(req.file);

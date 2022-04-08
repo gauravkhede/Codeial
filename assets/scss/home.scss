@@ -1,5 +1,7 @@
 #home-container{
     display:flex;
+    min-height:90%;
+    
     // border:1px solid black;
     
 
@@ -7,12 +9,21 @@
         width:70%;
         padding:10px;
     }
-    #user-friends{
-            
-        width:30%;
-        padding:10px;
+    #friends-container{
+        // min-height:100em;
         border-left:1px solid grey;
-        height:inherit;
-        
+        #user-friends{
+            // min-height:100%;
+            width:30%;
+            padding:10px;
+           
+            height:inherit;
+            
+        }
+        #chatbox-section{
+            // margin-top:90%;
+            // margin-left:5%;
+            position:fix;
+        }
     }
 }

@@ -2,21 +2,26 @@
     // console.log('Hello');
     //method to submit the form data for new past using ajax
     // console.log(PostComments,'is PostComments');
+    // console.log('1');
     let createPost= function(){
                 let newPostForm= $('#new-post-form');
-                newPostForm.submit(function(e){
+                
+                newPostForm.submit(function(e)
+                {
                     e.preventDefault();
+                    console.log('*******************');
                     $.ajax({
                         type:'post',
+                        
                         url:'/posts/create',
                         data:newPostForm.serialize(),
                         success: function(data){
                             console.log(data);
                             let newPost=newPostDom(data.data.post);
-                            // console.log('success2');
+                            console.log('success2');
                             $("#posts-list-container>ul").prepend(newPost);
                             deletePost($(' .delete-post-button',newPost)); 
-                            // console.log('success3');
+                            console.log('success3');
                             //call the create comment class
                             new PostComments(data.data.post._id);
 
@@ -39,11 +44,14 @@
                     
                 });
     }
+    createPost();
+
     //Method to create a post in DOM
-    let newPostDom= function(post){
+    let newPostDom=function(post){
         return $(`<li id="post-${ post._id}">
         <p>
-                <small> ${ post.user.name } : <br></small>
+                
+                <small> ${ post.user.name } : through AJAX<br></small>
                 ${ post.content }
         </p>
         <div class="post-comments">
@@ -57,7 +65,7 @@
                         
                         
                         <small>
-                        // changes done for code Activity Solution
+                        
                                 <a class="toggle-like-button" data-likes="0" href="/likes/toggle/?id=${post._id}&type=Post">0 Like</a>
                                 <a class="delete-post-button" href="/posts/destroy/${ post._id }">Delete</a>
                         </small>
@@ -98,8 +106,7 @@
         })
     }
     
-    createPost();
-
+    
 //     //method to create the comment using ajax
 //     let createComment= function(post){
 //         let newComment= $(`post-comments-${post._id}`);

@@ -4,6 +4,7 @@ const { post } = require('../routes/comments');
 const commentsMailer= require('../mailers/comments_mailer');
 //changes done for code Activity Solution
 const Like= require('../models/like');
+const User = require('../models/users');
 // const queue=require('../config/kue');
 // const commentEmailWorker= require('../workers/comment_email_worker');
 // module.exports.create= function(req,res){
@@ -26,15 +27,22 @@ const Like= require('../models/like');
 module.exports.create=async function(req,res){
     try{
         let post=await Post.findById(req.body.post);
+        post=await post.populate([{path:'comments'},]);
+        
+
+        
     if(post){
         let comment=await Comment.create({ 
             content:req.body.content,
-            post:req.body.post,
             user:req.user._id,
+            post:req.body.post,
+            
         });
+        comment= await comment.populate([{path: 'user'}]);
         post.comments.push(comment);
         post.save();
-        comment= await comment.populate([{path: 'user', select: 'name'}, {path: 'user', select: 'email'}]);
+        
+        // comment = await comment.populate('user', 'name email').execPopulate();
         commentsMailer.newComment(comment);
         // let job=queue.create('emails',comment).save(function(err){
         //     if(err){console.log('Error in creating a queue',job.id);

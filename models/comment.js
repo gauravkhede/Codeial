@@ -18,6 +18,10 @@ const commentSchema= new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Like'
     }],
+    nestedComment:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'NestedComment'
+    }],
 },{
     timestamps:true,
 });
