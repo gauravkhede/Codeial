@@ -1,5 +1,5 @@
 
-       <link rel="stylesheet" href="/css/users.css">
+       <link rel="stylesheet" href="<%= assetPath('css/users.css')%>">
        <img src="<%= profile_user.avatar %>" alt="<%= user.name %>" width="100">
        
        <% if(user.id == profile_user.id){ %>
@@ -15,6 +15,7 @@
                      <!-- if user doesn't match show only profile info -->
                      <p> <%= profile_user.name %></p>
                      <p> <%= profile_user.email %></p>
+                     
 
                      <% } %>
         

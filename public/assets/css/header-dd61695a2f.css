@@ -1,0 +1,29 @@
+header {
+  display: flex;
+  width: 100%;
+  color: white;
+  font-weight: 700;
+  background-color: darkblue; }
+  header #codeial-logo {
+    display: inline-block;
+    height: inherit; }
+  header .navigation-icon {
+    min-width: 92%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    height: inherit; }
+    header .navigation-icon .icon-container {
+      margin-top: 8px;
+      height: 100%;
+      display: inline-block;
+      margin-right: 14px; }
+      header .navigation-icon .icon-container a:link {
+        color: white;
+        text-decoration: none; }
+      header .navigation-icon .icon-container a:visited {
+        color: white;
+        text-decoration: none; }
+      header .navigation-icon .icon-container a:active {
+        color: blue;
+        text-decoration: none; }

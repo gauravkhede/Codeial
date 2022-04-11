@@ -1,8 +1,10 @@
 require('dotenv').config();
 const express=require('express');
+const logger=require('morgan');
 const env= require('./config/environment'); 
 const cookieParser=require('cookie-parser');
 const app=express();
+require('./config/view-helpers')(app);
 const port=8000;
 const cors=require('cors');
 
@@ -31,6 +33,7 @@ const Chatting=require('./models/chatengine');
 chatServer.listen(5000);
 console.log('chat Server is listening on port 5000');
 const path= require('path');
+if(process.env.name=='development'){
 app.use(sassMiddleware({
     src:path.join(__dirname,process.env.asset_path,'scss'),
     dest:path.join(__dirname,process.env.asset_path,'css'),
@@ -38,15 +41,18 @@ app.use(sassMiddleware({
     outputStyle:'extended',
     prefix: '/css',
 }));
+}
 app.use(express.urlencoded());
 
 app.use(cookieParser());
 
 app.use(cors());
 //to set up static files
-app.use(express.static(process.env.asset_path));  
+app.use(express.static(process.env.CODEIAL_ASSET_PATH));  
 //make the profile uploads path available to browser
 app.use('/uploads',express.static(__dirname+'/uploads'));
+
+app.use(logger(env.morgan.mode,env.options));
 
 //use expressLayout before routes
 app.use(expressLayout);
@@ -61,7 +67,7 @@ app.set('views','./views');
 app.use(session({
     name: 'codeial',
     //TODO change the secret before deployment in production mode
-    secret: process.env.session_cookie_key,
+    secret: process.env.CODEIAL_SESSION_COOKIE_KEY,
     saveUninitialized:false,
     resave:false,
     cookie: {
@@ -90,5 +96,6 @@ app.listen(port,function(err){
         console.log(`Error in running the server at port : ${port}`);
     }
     console.log(`Server is running successfully on port: ${port}`);
+    console.log("new environment vriable",process.env.GAURAV_KHEDE);
     console.log(process.env.CODEIAL_GOOGLE_CLIENT_ID);
 });
